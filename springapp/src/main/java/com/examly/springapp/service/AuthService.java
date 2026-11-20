@@ -31,6 +31,8 @@ public class AuthService {
 
     // Register a New User
     public String register(User user)throws EmailAlreadyExistsException,DataIntegrityViolationException {
+        if(user.getEmail()==null || !user.getEmail().matches("^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$") || user.getPassword()==null || user.getPassword().length()<8)
+            throw new IllegalArgumentException("A valid email and password of at least 8 characters are required");
         if (userRepo.findByEmail(user.getEmail()).isPresent()) {
             throw new EmailAlreadyExistsException("This email is already associated with other account.");
         }

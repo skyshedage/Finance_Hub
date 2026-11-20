@@ -80,8 +80,6 @@ public class EnquiryController {
     public ResponseEntity<?> viewAllEnquiry() {
         List<Enquiry> enquiries = enquiryServiceImpl.getAllEnquiries();
         // System.out.println(enquiries);
-        if (enquiries.isEmpty())
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         return new ResponseEntity<>(enquiries, HttpStatus.OK);
     }
 

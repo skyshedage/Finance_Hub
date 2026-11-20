@@ -2,6 +2,7 @@
     <div class="form-box">
       <h2>Plan Application Form</h2>
   
+      <p *ngIf="errorMessage" role="alert" class="error">{{errorMessage}}</p>
       <form [formGroup]="planForm" (ngSubmit)="applyForPlan()">
         <div class="form-row">
           <div class="form-group">
@@ -11,21 +12,12 @@
               *Applied Amount is required and must be at least 100.
             </div>
           </div>
-          <div class="form-group">
-            <label for="date">Application Date:</label>
-            <input type="date" id="date" formControlName="date" required>
-            <div *ngIf="planForm.controls['date'].invalid && planForm.controls['date'].touched" class="error">
-              *Application Date is required.
-            </div>
-          </div>
         </div>
-  
-        <label for="remarks">Remarks (Optional):</label>
-        <textarea id="remarks" formControlName="remarks"></textarea>
-  
-        <label for="proof">Proof Document:</label>
-        <input type="file" id="proof" required (change)="onFileSelected($event)" accept="image/*" />
-        <p *ngIf="fileName">Selected File: {{fileName}}</p>
+        <p class="form-note">Application date is recorded by the server. A manager can add a decision note after review.</p>
+
+        <label for="proof">Proof Image (PNG/JPEG, up to 2 MB):</label>
+        <input type="file" id="proof" required (change)="onFileSelected($event)" accept="image/png,image/jpeg" />
+        <p class="form-note" *ngIf="fileName">Selected File: {{fileName}}</p>
         <div *ngIf="planForm.controls['image'].invalid && planForm.controls['image'].touched" class="error">
           *Proof Document is required.
         </div>
@@ -45,7 +37,7 @@
             <p>Successfully applied!</p>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-primary" (click)="closeModal()">OK</button>
+            <button type="button" class="btn btn-primary" (click)="showModal = false">OK</button>
           </div>
         </div>
       </div>

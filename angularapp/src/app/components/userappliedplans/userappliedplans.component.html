@@ -11,14 +11,13 @@
             </tr>
         </thead>
         <tbody>
-            <tr>`</tr>
             <tr *ngFor="let f of planApplication ;let i = index">
-                <td>{{i+1}}</td>
-                <td>₹{{f.appliedAmount}}</td>
-                <td>{{f.date}}</td>
-                <td>{{f.remarks}}</td>
-                <td>{{f.status}}</td>
-                <td>{{f.image}}</td>
+                <td data-label="S.No">{{i+1}}</td>
+                <td data-label="Applied Amount">₹{{f.appliedAmount}}</td>
+                <td data-label="Application Date">{{f.date}}</td>
+                <td data-label="Remarks">{{f.remarks}}</td>
+                <td data-label="Status">{{f.status}}</td>
+                <td data-label="Proof Document">{{f.image}}</td>
             </tr>
         </tbody>
     </table>

@@ -32,6 +32,8 @@ public class AuthController {
             String res = authService.register(user);
             ApiResponse<String> response = new ApiResponse<>(true, "User registered successfully", res);
             return new ResponseEntity<>(response, HttpStatus.CREATED);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(new ApiResponse<>(false,e.getMessage(),null));
         } catch (EmailAlreadyExistsException | DataIntegrityViolationException e) {
             ApiResponse<String> response = new ApiResponse<>(false, e.getMessage(), null);
             return new ResponseEntity<>(response, HttpStatus.CONFLICT);

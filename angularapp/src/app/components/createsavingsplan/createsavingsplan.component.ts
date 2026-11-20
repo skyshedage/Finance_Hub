@@ -13,7 +13,7 @@ export class CreatesavingsplanComponent implements OnInit {
   errorMessage: string = '';
 
   riskLevels = ['High', 'Medium', 'Low'];
-  statuses = ['Active', 'Inactive'];
+  statuses = ['ACTIVE', 'INACTIVE'];
 
   constructor(
     private service: SavingsPlanService,

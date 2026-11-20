@@ -1,3 +1,4 @@
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { PlanApplication } from 'src/app/models/planapplication.model';
 import { PlanapplicationformService } from 'src/app/services/planapplicationform.service';
@@ -12,12 +13,13 @@ export class ManagerviewapplicationformComponent implements OnInit {
 
   planApplications: PlanApplication[] = [];
   showModal: boolean = false;
-  imageSrc: string = "";
+  imageSrc: SafeUrl | string = "";
+  private proofObjectUrl: string = "";
   showRejectModal: boolean = false;  // Flag to show rejection modal
   rejectionReason: string = "";      // To capture rejection reason
   selectedApplicationId: number = 0; // To capture the application being rejected
 
-  constructor(private service: PlanapplicationformService) {}
+  constructor(private service: PlanapplicationformService, private sanitizer: DomSanitizer) {}
 
   ngOnInit(): void {
     this.viewAllApplication();
@@ -67,16 +69,19 @@ export class ManagerviewapplicationformComponent implements OnInit {
     }
   }
 
-  toggleOpen(imagePath: string): void {
-
-    if (imagePath) {
-      this.imageSrc = imagePath;
-      this.showModal = true;
-    }
+  toggleOpen(applicationId: number): void {
+    this.service.getProof(applicationId).subscribe({next: blob => {
+      this.toggleClose();
+      // Only trust the URL created here for the backend-decoded PNG, never a user-supplied URL.
+      this.proofObjectUrl=URL.createObjectURL(blob);
+      this.imageSrc=this.sanitizer.bypassSecurityTrustUrl(this.proofObjectUrl);this.showModal=true;
+    },error: () => alert('No proof image is available for this application.')});
   }
 
   toggleClose(): void {
     this.showModal = false;
+    if(this.proofObjectUrl) URL.revokeObjectURL(this.proofObjectUrl);
+    this.proofObjectUrl="";
     this.imageSrc = "";
   }
 

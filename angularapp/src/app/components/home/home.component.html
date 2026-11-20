@@ -8,8 +8,7 @@
         <div class="glass-content">
             <h1>Welcome to <span class="highlight">FinanceHub</span></h1>
             <p>
-                <strong>Your trusted partner for financial growth. Explore investments, savings, and personalized loan
-                    options.</strong>
+                <strong>A savings-plan application management demo built with Angular and Spring Boot.</strong>
             </p>
             <a href="#about" class="btn-custom">Explore More</a>
         </div>
@@ -18,31 +17,31 @@
     <!-- About Section -->
     <section id="about" class="glass-section">
         <div class="section-content glass-box">
-            <h2>Why Choose <span class="highlight">FinanceHub</span>?</h2>
-            <p>We offer transparent, secure, and competitive financial solutions tailored to your needs.</p>
-            <p class="tagline">Jeevan ke saath bhi Jeevan ke baad bhi</p>
+            <h2>About the demo</h2>
+            <p>Browse administrator-created savings plans, submit an application with supporting proof, and track its review status.</p>
+            <p>This project does not connect to bank accounts, move money, offer loans or investments, or provide financial advice.</p>
         </div>
     </section>
 
     <!-- Features Section -->
     <section id="features">
         <div class="section-content">
-            <h2>Our <span class="highlight">Features</span></h2>
+            <h2>Implemented workflows</h2>
             <div class="features-grid">
                 <div class="feature-box glass-box">
                     <i class="fas fa-piggy-bank"></i>
-                    <h3>Smart Savings</h3>
-                    <p>Optimize your savings with our high-yield plans.</p>
+                    <h3>Savings plans</h3>
+                    <p>View available plan details and choose a plan to apply for.</p>
                 </div>
                 <div class="feature-box glass-box">
                     <i class="fas fa-chart-line"></i>
-                    <h3>Investment Strategies</h3>
-                    <p>Explore top-performing investment opportunities.</p>
+                    <h3>Applications</h3>
+                    <p>Submit an application and supporting image for an administrator to review.</p>
                 </div>
                 <div class="feature-box glass-box">
                     <i class="fas fa-hand-holding-usd"></i>
-                    <h3>Secure Budget Planning</h3>
-                    <p>Get plans with the best rates and flexible terms.</p>
+                    <h3>Status and enquiries</h3>
+                    <p>Track application decisions and send enquiries about plans.</p>
                 </div>
             </div>
         </div>
@@ -51,9 +50,10 @@
     <!-- Team Section -->
     <section id="team" class="glass-section">
         <div class="section-content">
-            <h2>Meet Our <span class="highlight">Team</span></h2>
+            <h2>Original project credits</h2>
+            <p>Names and role descriptions below are retained from the original project source; they have not been independently verified.</p>
             <div class="slider-container glass-box">
-                <button class="prev" (click)="prevSlide()">&#10094;</button>
+                <button aria-label="Previous project credit" class="prev" (click)="prevSlide()">&#10094;</button>
                 <div class="slider" [style.transform]="'translateX(-' + (currentIndex * 100) + '%)'">
                     <div class="slide" *ngFor="let member of teamMembers">
                         <img [src]="member.image" [alt]="member.name">
@@ -62,7 +62,7 @@
                         <button class="btn-custom" (click)="showWork(member)">View Work</button>
                     </div>
                 </div>
-                <button class="next" (click)="nextSlide()">&#10095;</button>
+                <button aria-label="Next project credit" class="next" (click)="nextSlide()">&#10095;</button>
             </div>
         </div>
     </section>
@@ -70,9 +70,9 @@
     <!-- Contact Section -->
     <section id="contact">
         <div class="section-content glass-box">
-            <h2>Get In <span class="highlight">Touch</span></h2>
-            <p>Need expert financial advice? Contact us today!</p>
-            <a href="mailto:contact@financehub.com" class="btn-custom">Email Us</a>
+            <h2>Demo scope</h2>
+            <p>This is a demonstration project, not a financial services provider. No customer support address is configured.</p>
+
         </div>
     </section>
 
@@ -85,7 +85,7 @@
                 <div class="info_container">
                     <h3 class="highlight">{{selectedMember?.role}}</h3>
                     <p class="work-description">{{selectedWork}}</p>
-                    <p class="work-description">{{selectedMember.desc}}</p>
+                    <p class="work-description">{{selectedMember?.desc}}</p>
                     <button class="btn-custom" (click)="closePopup()">Close</button>
                 </div>
             </div>

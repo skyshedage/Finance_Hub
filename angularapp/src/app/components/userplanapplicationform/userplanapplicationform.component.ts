@@ -32,6 +32,8 @@ export class UserplanapplicationformComponent implements OnInit {
     })
   }
 
+  proofData: string = '';
+  errorMessage: string = '';
   fileName: string = ''; // To store file name
 
   onFileSelected(event: Event): void {
@@ -39,14 +41,25 @@ export class UserplanapplicationformComponent implements OnInit {
 
     if (input.files && input.files.length > 0) {
       const file = input.files[0]; // Get the first selected file
-      this.fileName = file.name; // Extract file name
-
+      if (!['image/png','image/jpeg'].includes(file.type) || file.size > 2 * 1024 * 1024) {
+        this.errorMessage = 'Use a PNG or JPEG image up to 2 MB.';
+        this.planForm.patchValue({image: ''});this.proofData='';return;
+      }
+      this.fileName = file.name;
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.proofData = String(reader.result).split(',')[1];
+        this.planForm.patchValue({image: this.fileName});this.errorMessage='';
+      };
+      reader.onerror = () => {this.errorMessage='The image could not be read. Please select it again.';};
+      reader.readAsDataURL(file);
     }
   }
 
   applyForPlan() {
 
-    alert("clicked");
+    if(this.planForm.invalid || !this.proofData){this.planForm.markAllAsTouched();return;}
+    this.errorMessage='';
     const planId = +this.planId;
     const appliedAmount = this.planForm.value.appliedAmount;
 
@@ -56,6 +69,7 @@ export class UserplanapplicationformComponent implements OnInit {
       appliedAmount: appliedAmount,
       date: this.planForm.value.date,
       image: this.fileName,
+      proof: this.proofData,
       remarks: this.planForm.value.remarks,
       status: 'PENDING'
     };
@@ -69,7 +83,7 @@ export class UserplanapplicationformComponent implements OnInit {
         this.router.navigate(['/user/applied/plans']);
       },
       (error) => {
-        console.error('Failed to apply', error);
+        this.errorMessage=error?.error?.message || 'Application could not be submitted. Please try again.';
       }
     );
   }

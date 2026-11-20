@@ -30,6 +30,8 @@ public class PlanApplication {
     private LocalDate date;
     private String remarks;
     private String image;
+    @Lob @jakarta.persistence.Column(columnDefinition="LONGBLOB") @JsonIgnore
+    private byte[] proofData;
 
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "userId", nullable = false)

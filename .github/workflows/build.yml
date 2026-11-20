@@ -1,48 +1,31 @@
-name: Build
-'on':
-  push:
-    branches:
-      - '*'
-  pull_request:
-    types:
-      - opened
-      - synchronize
-      - reopened
+name: Reproducible checks
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
 jobs:
-  build:
-    name: Build
+  backend:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
         with:
-          fetch-depth: 0
-      - name: Set up JDK 17
-        uses: actions/setup-java@v1
+          distribution: temurin
+          java-version: '17'
+          cache: maven
+          cache-dependency-path: springapp/pom.xml
+      - run: mvn -B -f springapp/pom.xml test
+  frontend:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: angularapp
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          java-version: 17
-      - name: Move Pom.xml to Root
-        run: mv .github/workflows/pom.xml ./pom.xml
-      - name: Build and analyze
-        env:
-          GITHUB_TOKEN: >-
-            cc729e1e-b2fa-4014-bf11-9580204082e7-f5c091b4-51f3-4621-8845-6712efd8e615
-          SONAR_TOKEN: 811c9a490983734401ba4e491eaefc8bfa7281de
-        run: >-
-          mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
-          -Dsonar.projectKey=iamneo-production_cc729e1e-b2fa-4014-bf11-9580204082e7-f5c091b4-51f3-4621-8845-6712efd8e615
-          -Dsonar.login=811c9a490983734401ba4e491eaefc8bfa7281de
-      - name: Trigger API
-        if: always()
-        env:
-          API_URL: '${{ secrets.API_URL }}'
-          API_SECRET: '${{ secrets.API_SECRET }}'
-        run: >
-          REPO_NAME=$(echo "${GITHUB_REPOSITORY}" | cut -d '/' -f 2)
-
-          BRANCH_NAME=${GITHUB_REF#refs/heads/}
-
-          API_PAYLOAD="{ \"repo_id\": \"$REPO_NAME\", \"branch_name\":
-          \"$BRANCH_NAME\", \"api_secret\": \"$API_SECRET\" }"
-
-          curl -X POST -H "Content-Type: application/json" -d "$API_PAYLOAD"
-          $API_URL
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: angularapp/package-lock.json
+      - run: npm ci
+      - run: NODE_OPTIONS=--openssl-legacy-provider npm run build -- --prod

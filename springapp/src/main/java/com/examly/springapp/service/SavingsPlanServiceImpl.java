@@ -13,6 +13,7 @@ public class SavingsPlanServiceImpl implements SavingsPlanService {
     private SavingsPlanRepo savingsPlanRepository;
 
     public SavingsPlan addSavingsPlan(SavingsPlan savingsPlan) {
+        validate(savingsPlan);savingsPlan.setSavingsPlanId(null);
         return savingsPlanRepository.save(savingsPlan);
     }
 
@@ -20,8 +21,15 @@ public class SavingsPlanServiceImpl implements SavingsPlanService {
         return savingsPlanRepository.findAll();
     }
 
+    private void validate(SavingsPlan p){
+        if(p.getStatus()!=null)p.setStatus(p.getStatus().toUpperCase(java.util.Locale.ROOT));
+        if(p.getName()==null || p.getName().isBlank() || !Double.isFinite(p.getGoalAmount()) || p.getGoalAmount()<=0 || p.getTimeFrame()<=0)
+            throw new IllegalArgumentException("Name, positive finite goal and positive timeframe are required");
+        if(!"ACTIVE".equals(p.getStatus()) && !"INACTIVE".equals(p.getStatus())) throw new IllegalArgumentException("Status must be ACTIVE or INACTIVE");
+    }
     public SavingsPlan updateSavingsPlan(Long id, SavingsPlan updatedPlan) {
-        SavingsPlan plan = savingsPlanRepository.findById(id).orElseThrow(() -> new RuntimeException("Plan not found"));
+        validate(updatedPlan);
+        SavingsPlan plan = savingsPlanRepository.findById(id).orElseThrow(() -> new jakarta.persistence.EntityNotFoundException("Plan not found"));
         plan.setName(updatedPlan.getName());
         plan.setGoalAmount(updatedPlan.getGoalAmount());
         plan.setTimeFrame(updatedPlan.getTimeFrame());

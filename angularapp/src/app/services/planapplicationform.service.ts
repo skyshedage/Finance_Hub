@@ -12,6 +12,8 @@ export class PlanapplicationformService {
   constructor(private http:HttpClient,private auth:AuthService) { }
   apiUrl:string='/api/planapplications'
 
+  public getProof(id:number):Observable<Blob>{return this.http.get(this.apiUrl+'/'+id+'/proof',{responseType:'blob'});}
+
   public addPlanApplication(data:PlanApplication):Observable<PlanApplication>{
     return this.http.post<PlanApplication>(this.apiUrl,data);
   }

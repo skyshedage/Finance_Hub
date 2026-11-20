@@ -29,8 +29,10 @@ public class EnquiryServiceImpl implements EnquiryService {
     public Enquiry addEnquiry(Enquiry enquiry,Long userId) {
     
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found with id: " + enquiry.getUser().getUserId()));
+                .orElseThrow(() -> new EntityNotFoundException("User not found"));
     
+        if(enquiry.getMessage()==null || enquiry.getMessage().isBlank()) throw new IllegalArgumentException("Enquiry message is required");
+        enquiry.setReplyFromManager(null);
         enquiry.setEnquiryId(null);
         enquiry.setStatus("PENDING");
         enquiry.setUser(user); // Ensure user reference is properly set
@@ -83,7 +85,7 @@ public class EnquiryServiceImpl implements EnquiryService {
     @Override
     public List<Enquiry> getEnquiryByUserId(Long UserenquiryId) {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getEnquiryByUserId'");
+        return enquiryRepo.findByUser_UserId(UserenquiryId);
     }
 
     @Transactional
@@ -107,7 +109,7 @@ public class EnquiryServiceImpl implements EnquiryService {
     // // ✅ Service Method to Get Enquiry By ID
     public Enquiry getEnquiryById(Long id) {
         return enquiryRepo.findById(id)
-                .orElseThrow(() -> new RuntimeException("Enquiry not found with ID: " + id));
+                .orElseThrow(() -> new EntityNotFoundException("Enquiry not found"));
     }
 
     // // Existing method to get a user’s enquiry by its ID

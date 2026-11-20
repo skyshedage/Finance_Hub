@@ -32,10 +32,10 @@ export class UserviewsavingsplanComponent implements OnInit {
         if (response.success) {
           this.savings = response.data.slice();
           this.arr=response.data.slice()
-          window.alert("savings plan fetched successfully!!")
+          this.loading=false;
         } else {
           this.errorMessage = 'No savings plans available';
-          window.alert("There was an error fetching the savings plan")
+          this.loading=false;
         }
       },
       (error) => {

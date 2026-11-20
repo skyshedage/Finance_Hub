@@ -12,4 +12,5 @@ public class PlanApplicationRequest {
     private LocalDate date;
     private String remarks;
     private String image;
+    private String proof;
 }

@@ -40,6 +40,16 @@ public class PlanApplicationController {
         return ResponseEntity.ok(new ApiResponse<>(true, "Plan application submitted successfully", application));
     }
 
+    @Autowired private PlanApplicationRepo applications;
+    @GetMapping("/{id}/proof")
+    public ResponseEntity<byte[]> proof(@PathVariable Long id, org.springframework.security.core.Authentication authentication) {
+        PlanApplication app=applications.findById(id).orElseThrow(()->new EntityNotFoundException("Application not found"));
+        boolean admin=authentication.getAuthorities().stream().anyMatch(a->a.getAuthority().equals("ROLE_ADMIN"));
+        if(!admin && !app.getUser().getEmail().equals(authentication.getName())) throw new org.springframework.security.access.AccessDeniedException("Not your application");
+        if(app.getProofData()==null) return ResponseEntity.notFound().build();
+        return ResponseEntity.ok().contentType(org.springframework.http.MediaType.IMAGE_PNG).header("Cache-Control","no-store").header("X-Content-Type-Options","nosniff").body(app.getProofData());
+    }
+
     @GetMapping
     @PreAuthorize("hasAuthority('ROLE_ADMIN')") // Only ADMIN can view all applications
     public ResponseEntity<ApiResponse<List<PlanApplication>>> getAllApplications() {

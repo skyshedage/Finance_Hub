@@ -32,16 +32,10 @@ export class UserHomeComponent implements OnInit {
     const userId = this.authService.getUserId();
  
     this.planApplicationService.getAllPlanApplicationsForUser().subscribe((response:any) => {
-      this.stats.applicationCount = response?.data?.length;
-      console.log("DBUG :: APPLICATIONCOUNT :: "+this.stats.applicationCount);
-      this.stats.totalSavings = response?.data?.reduce((sum, plan) => {
-        return plan.status === "APPROVED" ? sum + plan.appliedAmount : sum;
-    }, 0);
-    this.stats.userActivePlans=response?.data?.filter(data=>data.status==="APPROVED").length;
-    console.log("DBUG :: userActivePlans :: "+JSON.stringify(this.stats.userActivePlans));
-    });
-    this.planApplicationService.getAllPlanApplicationsForUser().subscribe((response:any) => {
-      this.stats.applicationCount = response.length;
+      const plans = response?.data || [];
+      this.stats.applicationCount = plans.length;
+      this.stats.totalSavings = plans.reduce((sum, plan) => plan.status === "APPROVED" ? sum + plan.appliedAmount : sum, 0);
+      this.stats.userActivePlans = plans.filter(plan => plan.status === "APPROVED").length;
     });
     this.enquiryService.getUserEnquiries(Number(userId)).subscribe((response:any) => {
       this.stats.totalEnquiries = response?.data?.length;

@@ -29,7 +29,7 @@ export class UseraddenquiryComponent implements OnInit {
 
       this.service.addEnquiry(this.enquiryForm.value).subscribe(
         x => { 
-          console.log("DBUG :: :: "+JSON.stringify(x));
+
           this.enquiryForm.reset();
           this.pop = true;
           this.int = setTimeout(() => {

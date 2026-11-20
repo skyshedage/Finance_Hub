@@ -9,7 +9,7 @@ import { ApiResponse } from '../models/api-response.model';
   providedIn: 'root'
 })
 export class SavingsPlanService {
-  backendUrl: string = 'https://ide-cacacacfdeafbedfebedabfcbfefde.premiumproject.examly.io/proxy/8080/api/savingsplans';
+  backendUrl: string = '/api/savingsplans';
 
   constructor(private http: HttpClient) { }
 

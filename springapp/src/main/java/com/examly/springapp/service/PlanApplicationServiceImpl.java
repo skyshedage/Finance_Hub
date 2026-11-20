@@ -17,7 +17,7 @@ import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 
 @Service
-public class PlanApplicationServiceImpl {
+public class PlanApplicationServiceImpl implements PlanApplicationService {
 
     @Autowired
     private PlanApplicationRepo planApplicationRepository;

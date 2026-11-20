@@ -10,7 +10,7 @@ import { AuthService } from './auth.service';
 export class PlanapplicationformService {
 
   constructor(private http:HttpClient,private auth:AuthService) { }
-  apiUrl:string='https://ide-cacacacfdeafbedfebedabfcbfefde.premiumproject.examly.io/proxy/8080/api/planapplications'
+  apiUrl:string='/api/planapplications'
 
   public addPlanApplication(data:PlanApplication):Observable<PlanApplication>{
     return this.http.post<PlanApplication>(this.apiUrl,data);

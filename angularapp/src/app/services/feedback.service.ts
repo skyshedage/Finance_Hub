@@ -9,7 +9,7 @@ import { AuthService } from './auth.service';
 })
 export class FeedbackService {
 
-  public baseUrl:string='https://ide-cacacacfdeafbedfebedabfcbfefde.premiumproject.examly.io/proxy/8080/api/feedback';
+  public baseUrl:string='/api/feedback';
   constructor(private http:HttpClient,private auth:AuthService) { }
   
   // Add feedback

@@ -9,7 +9,7 @@ import { AuthService } from './auth.service';
 })
 export class EnquiryService {
  
-    apiUrl:string="https://ide-cacacacfdeafbedfebedabfcbfefde.premiumproject.examly.io/proxy/8080/api/enquiries"
+    apiUrl:string="/api/enquiries"
  
     constructor(private http:HttpClient,private auth:AuthService) { }
  
@@ -28,7 +28,7 @@ export class EnquiryService {
     //-----------------------------------------------------------------------
     
   addEnquiry(enquiry:any):Observable<Enquiry>{
-      console.log("DBUG :: "+enquiry);
+
       return this.http.post<Enquiry>(this.apiUrl+`/${+this.auth.getUserId()}`,enquiry);
   }
   
@@ -57,4 +57,4 @@ export class EnquiryService {
   }
 }
 
-//https://ide-cacacacfdeafbedfebedabfcbfefde.premiumproject.examly.io/proxy/8080/api/enquiries/1
+///api/enquiries/1

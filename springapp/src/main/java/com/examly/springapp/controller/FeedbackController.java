@@ -29,7 +29,7 @@ public class FeedbackController {
 
     // Add feedback (can be done by User or Admin)
     @PostMapping("/{userId}")
-    @PreAuthorize("hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_USER')")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN') or @ownership.user(#userId, authentication)")
     public ResponseEntity<FeedBackDTO> addFeedback(@RequestBody Feedback feedback,@PathVariable Long userId) {
         FeedBackDTO newFeedback = feedbackService.addFeedback(feedback,userId);
         return ResponseEntity.ok(newFeedback);
@@ -45,13 +45,14 @@ public class FeedbackController {
 
     // Delete feedback (can only be done by Admin)
     @DeleteMapping("/{feedbackId}")
-    @PreAuthorize("hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_USER')")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN') or @ownership.feedback(#feedbackId, authentication)")
     public ResponseEntity<String> deleteFeedback(@PathVariable Long feedbackId) {
         feedbackService.deleteFeedback(feedbackId);
         return ResponseEntity.ok("Feedback deleted successfully");
     }
 
     // Get all feedback (optional for listing)
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @GetMapping
     public ResponseEntity<List<FeedBackDTO>> getAllFeedback() {
         List<FeedBackDTO> fdbl = feedbackService.getAllFeedback();
@@ -59,6 +60,7 @@ public class FeedbackController {
     }
 
     // Get feedback with userId
+    @PreAuthorize("hasAuthority('ROLE_ADMIN') or @ownership.user(#userId, authentication)")
     @GetMapping("/{userId}")
     public ResponseEntity<List<Feedback>> getFeedBackByUserId(@PathVariable Long userId){
         List<Feedback> fdbl = feedbackService.getFeedBackByUserId(userId);

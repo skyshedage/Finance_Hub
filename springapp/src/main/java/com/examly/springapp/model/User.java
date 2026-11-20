@@ -31,6 +31,8 @@ public class User {
     @Column(unique = true)
     private String email;
     
+    @com.fasterxml.jackson.annotation.JsonProperty(access = com.fasterxml.jackson.annotation.JsonProperty.Access.WRITE_ONLY)
+    @lombok.ToString.Exclude
     private String password;
     
     @Column(unique = true)

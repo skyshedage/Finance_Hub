@@ -43,7 +43,7 @@ export class UseraddfeedbackComponent implements OnInit {
     // Submit feedback to the database
     this.service.addFeedback(this.feedbackForm.value).subscribe(
       response => {
-        console.log("Feedback added:", response);
+
         this.feedbackForm.reset();  // Reset form after successful submission
         this.toggle(); // Show success popup
         this.router.navigate(['/user/view/feedback'])

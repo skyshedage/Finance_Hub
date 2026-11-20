@@ -65,7 +65,7 @@
 
   <!-- Loader -->
   <div id="loader">
-    <video src="./assets/loading (1).mp4"  autoplay muted alt="Loading...">
+    <video src="./assets/loading (1).mp4" autoplay muted aria-label="Loading"></video>
   </div>
 
   <!-- Angular App -->
@@ -77,18 +77,12 @@
     defer></script>
 
   <!-- Angular Scripts -->
-  <script src="runtime.js" defer></script>
-  <script src="polyfills.js" defer></script>
-  <script src="styles.js" defer></script>
-  <script src="vendor.js" defer></script>
-  <script src="main.js" defer></script>
 
   <script>
-    window.onload = function () {
-      setTimeout(() => {
-        document.getElementById("loader").style.display = "none";
-      }, 5000)
-    };
+    window.addEventListener('DOMContentLoaded', function () {
+      var loader = document.getElementById('loader');
+      if (loader) loader.style.display = 'none';
+    });
   </script>
 
 </body>

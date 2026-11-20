@@ -7,7 +7,7 @@ import com.examly.springapp.model.SavingsPlan;
 import com.examly.springapp.repository.SavingsPlanRepo;
 
 @Service
-public class SavingsPlanServiceImpl {
+public class SavingsPlanServiceImpl implements SavingsPlanService {
 
     @Autowired
     private SavingsPlanRepo savingsPlanRepository;

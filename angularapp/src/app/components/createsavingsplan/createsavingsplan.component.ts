@@ -33,9 +33,9 @@ export class CreatesavingsplanComponent implements OnInit {
   ngOnInit(): void { }
 
   addSavingsPlan(): void {
-    console.log(this.form.valid);
+
     if (this.form.valid) {
-      console.log("DBUG :: " + JSON.stringify(this.form.value));
+
       this.playBackgroundVideo();
       this.service.addSavingsPlan(this.form.value).subscribe(
         response => {

@@ -22,7 +22,7 @@ export class RegistrationComponent implements OnInit {
       password: ['', [Validators.required, Validators.minLength(6), Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/)]],
       confirmPassword: ['', Validators.required],
       mobileNumber: ['', [Validators.required, Validators.pattern(/^[6-9]\d{9}$/)]],
-      userRole: ['', Validators.required]
+      userRole: ['USER', Validators.required]
     }, { validator: this.passwordMatchValidator });
   }
 
@@ -48,15 +48,15 @@ onSubmit() {
         email:this.registerForm.value.email,
         password:this.registerForm.value.password,
         mobileNumber:this.registerForm.value.mobileNumber,
-        userRole:this.registerForm.value.userRole
+        userRole:'USER'
       }
 
       this.authService.register(credentials).subscribe(
         (res: any) => {
-          console.log("Response from server:", JSON.stringify(res));
+
           if (res.success) {
-            console.log("Navigation to login page");
-            console.log("Form Submitted:", JSON.stringify(this.registerForm.value));
+
+
             alert("Registration successful!");
             this.router.navigate(["/login"]);
             
@@ -70,7 +70,7 @@ onSubmit() {
         }
       );
     } else {
-      console.log("Form is invalid");
+
     }
   }
   // showPopup() {

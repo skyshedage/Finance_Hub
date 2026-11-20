@@ -27,7 +27,7 @@ export class UserplanapplicationformComponent implements OnInit {
 
   ngOnInit(): void {
     this.actRoute.queryParams.subscribe(params => {
-      console.log("GOT WHEN APPLY WAS CLICKED " + JSON.stringify(params));
+
       this.planId = +params['planId'];
     })
   }
@@ -40,7 +40,7 @@ export class UserplanapplicationformComponent implements OnInit {
     if (input.files && input.files.length > 0) {
       const file = input.files[0]; // Get the first selected file
       this.fileName = file.name; // Extract file name
-      console.log('Selected File Name:', this.fileName);
+
     }
   }
 
@@ -60,12 +60,9 @@ export class UserplanapplicationformComponent implements OnInit {
       status: 'PENDING'
     };
 
-    console.log("DBUG :: application :: "+ JSON.stringify(application));
-    
-
     this.planApplicationService.applyForPlan(application).subscribe(
       (response:any) => {
-        console.log('Application submitted successfully', response);
+
         window.alert("applied successfully");
         this.planForm.reset();
         this.fileName="";

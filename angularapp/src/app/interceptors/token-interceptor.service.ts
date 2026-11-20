@@ -9,7 +9,7 @@ export class TokenInterceptorService implements HttpInterceptor  {
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const token = localStorage.getItem('token');
 
-    if(token){
+    if(token && req.url.startsWith('/api/')){
       const cloned = req.clone(
         {
           setHeaders:{

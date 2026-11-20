@@ -13,7 +13,14 @@ import java.util.function.Function;
 @Component
 public class JwtUtil {
 
-    private String secretKey = "qwertyuiopasdfghjklmnbvcxzZAQWSXCDERFVBGTYHNMJUIKLOP"; // Change this in production
+    private final byte[] secretKey;
+    public JwtUtil(@org.springframework.beans.factory.annotation.Value("${FINANCE_JWT_SECRET:}") String secret) {
+        if(secret == null || secret.getBytes(java.nio.charset.StandardCharsets.UTF_8).length < 32) {
+            throw new IllegalArgumentException("FINANCE_JWT_SECRET must contain at least 32 bytes");
+        }
+        this.secretKey=secret.getBytes(java.nio.charset.StandardCharsets.UTF_8);
+    }
+
 
     // Generate Token (Valid for 2 Hours)
     public String generateToken(User user) {

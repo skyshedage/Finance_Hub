@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
 })
 export class AuthService {
   
-  private apiURL = 'https://ide-cacacacfdeafbedfebedabfcbfefde.premiumproject.examly.io/proxy/8080/api'; // Change as per backend API
+  private apiURL = '/api'; // Change as per backend API
 
   constructor(private http: HttpClient) {}
 

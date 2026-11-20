@@ -20,13 +20,13 @@ export class AdminviewfeedbackComponent implements OnInit {
   getAllFeedbacks() {
     this.service.getAllFeedback().subscribe((data: any) => {
       this.feedbacks = data;
-      console.log("DBUG :: FEEDBACKS ::\n\n" + JSON.stringify(data));
+
     });
   }
 
   showProfile(user: any): void {
     this.selectedUser = user;
-    console.log("DBUG :: USER :: SELECTED USER :: \n\n" + JSON.stringify(this.selectedUser));
+
     this.togglePopup();
   }
 

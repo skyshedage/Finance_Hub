@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 })
 export class AdminDashService {
 
-  private apiUrl = 'https://ide-cacacacfdeafbedfebedabfcbfefde.premiumproject.examly.io/proxy/8080/api/admin/dashboard';
+  private apiUrl = '/api/admin/dashboard';
   
 
   constructor(private http: HttpClient) {}

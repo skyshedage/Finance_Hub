@@ -27,7 +27,7 @@ public class AuthController {
     // Register API
     @PostMapping("/register")
     public ResponseEntity<ApiResponse<String>> register(@RequestBody User user) {
-        System.out.println("\n\n DBUG  :: " + user +"\n\n");
+
         try {
             String res = authService.register(user);
             ApiResponse<String> response = new ApiResponse<>(true, "User registered successfully", res);

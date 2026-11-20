@@ -26,7 +26,7 @@ export class ManagerviewapplicationformComponent implements OnInit {
   viewAllApplication(): void {
     this.service.getAllPlanApplications().subscribe({
       next: (response:any) => {
-        console.log("DBUG ::\n " + JSON.stringify(response));
+
         this.planApplications = response?.data || [];
       },
       error: (err) => console.error("Error fetching applications", err),
@@ -36,7 +36,7 @@ export class ManagerviewapplicationformComponent implements OnInit {
   acceptApplication(planApplicationId: number): void {
     this.service.approvePlanApplication(planApplicationId).subscribe({
       next: (response) => {
-        console.log("DBUG :: accept :: " + JSON.stringify(response));
+
         this.viewAllApplication();
       },
       error: (err) => console.error("Error approving application", err),
@@ -52,7 +52,7 @@ export class ManagerviewapplicationformComponent implements OnInit {
     if (this.rejectionReason.trim()) {
       this.service.rejectPlanApplication(this.selectedApplicationId, this.rejectionReason).subscribe({
         next: (response) => {
-          console.log("DBUG :: reject :: " + JSON.stringify(response));
+
           this.showRejectModal = false;
           this.rejectionReason = ""; // Clear the input
           this.viewAllApplication(); // Refresh the applications
@@ -68,8 +68,7 @@ export class ManagerviewapplicationformComponent implements OnInit {
   }
 
   toggleOpen(imagePath: string): void {
-    console.log("DBUG :: toggleOpen clicked :: " + imagePath);
-    
+
     if (imagePath) {
       this.imageSrc = imagePath;
       this.showModal = true;

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { ChartData, ChartOptions } from 'chart.js';
+
 import { AdminDashService } from 'src/app/services/admin-dash.service';
 
 @Component({

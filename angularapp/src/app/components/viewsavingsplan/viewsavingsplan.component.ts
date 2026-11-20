@@ -31,8 +31,7 @@ export class ViewsavingsplanComponent implements OnInit {
       }
     }, error => {
       // console.error('Error fetching savings plans:', error);
-      console.log("ERROR :: "+error);
-     
+
       this.message = "Error fetching data.";
     });
   }
@@ -40,8 +39,7 @@ export class ViewsavingsplanComponent implements OnInit {
   deleteSavingsPlans(planId:number) {
     this.savingsPlanService.deleteSavingsPlan(planId.toString()).subscribe((deletedData)=>{
       this.savings=this.savings.filter(f=>f.savingsPlanId!==planId);
-      console.log("DELETE DATA DBUG :: "+JSON.stringify(deletedData));
-     
+
     })
   }
  

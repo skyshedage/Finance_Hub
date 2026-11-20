@@ -20,7 +20,7 @@ export class UserappliedplansComponent implements OnInit {
   }
    AppliedFormsByUser():void{
     this.service.getAllPlanApplicationsForUser().subscribe((x:any)=>{
-      console.log("DBUG :: APPLIED FORMS BY USER :: "+JSON.stringify(x));
+
       this.planApplication=x?.data;
     })
   }

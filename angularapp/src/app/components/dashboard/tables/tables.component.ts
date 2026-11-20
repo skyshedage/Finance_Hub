@@ -16,12 +16,12 @@ export class TablesComponent implements OnInit {
 
   ngOnInit(): void {
     this.dashboardService.getRecentApplications().subscribe(response => this.recentApplications = response.data);
-    console.log("\n"+JSON.stringify(this.recentApplications)+"\n");
+
     this.dashboardService.getRecentEnquiries().subscribe(response => this.recentEnquiries = response.data);
-    console.log("\n"+JSON.stringify(this.recentApplications)+"\n");
+
     this.dashboardService.getRecentFeedbacks().subscribe(response => this.recentFeedbacks = response.data);
-    console.log("\n"+JSON.stringify(this.recentApplications)+"\n");
+
     this.enqService.getAllEnquiry().subscribe(response => this.recentEnquiries=response);
-    console.log("\n"+JSON.stringify(this.recentApplications)+"\n");
+
   }
 }

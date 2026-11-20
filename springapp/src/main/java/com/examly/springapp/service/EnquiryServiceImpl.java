@@ -31,6 +31,8 @@ public class EnquiryServiceImpl implements EnquiryService {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found with id: " + enquiry.getUser().getUserId()));
     
+        enquiry.setEnquiryId(null);
+        enquiry.setStatus("PENDING");
         enquiry.setUser(user); // Ensure user reference is properly set
     
         return enquiryRepo.save(enquiry);
@@ -74,9 +76,6 @@ public class EnquiryServiceImpl implements EnquiryService {
     public List<Enquiry> getUserEnquiries(Long userId) {
         List<Enquiry> enquiries = enquiryRepo.findByUser_UserId(userId);
         
-        if (enquiries.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No enquiries found for user with ID: " + userId);
-        }
 
         return enquiries;
     }

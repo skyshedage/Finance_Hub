@@ -20,7 +20,7 @@ export class UserviewfeedbackComponent implements OnInit {
   loadFeedback(): void {
     this.service.getFeedbackByUserId().subscribe(
       data => {
-        console.log("DBUG :: FEEDBACK :: "+JSON.stringify(data));
+
         this.feedbacks = data;
       },
       error => {
@@ -58,7 +58,7 @@ export class UserviewfeedbackComponent implements OnInit {
     this.feedbacks=this.feedbacks.filter(f=>f.feedbackId!==feedbackId);
     this.service.deleteFeedback(feedbackId).subscribe(
       response => {
-        console.log("Feedback deleted:", response);
+
         this.loadFeedback(); // Reload feedback list after deletion
       },
       error => {

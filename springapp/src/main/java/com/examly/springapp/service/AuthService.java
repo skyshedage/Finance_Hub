@@ -37,6 +37,7 @@ public class AuthService {
         user.setPassword(passwordEncoder.encode(user.getPassword())); // Encrypt password
 
         // Registration is public. Client-supplied roles must never grant privileges.
+        user.setUserId(null);
         user.setUserRole("USER");
         try {
             userRepo.save(user);

@@ -25,6 +25,7 @@ public class FeedbackServiceImpl implements FeedbackService{
 
      // Add feedback
     public FeedBackDTO addFeedback(Feedback feedback,Long userId) {
+        feedback.setFeedbackId(null);
         feedback.setDate(LocalDate.now());
         User user = userRepo.findById(userId).get();
         if(user==null) return null;

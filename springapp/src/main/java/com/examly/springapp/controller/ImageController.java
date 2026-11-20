@@ -25,8 +25,11 @@ public class ImageController {
     @GetMapping("/{imageName}")
     public ResponseEntity<Resource> getImage(@PathVariable String imageName) {
         try {
-            System.out.println("INSIDE IMG CONTROLLER :: "+imageName);
-            Path imagePath = Paths.get("src/main/java/com/examly/springapp/test_imgs/" + imageName);
+
+            if (!imageName.matches("[A-Za-z0-9_-]+\\.(jpg|jpeg|png)")) return ResponseEntity.badRequest().build();
+            Path root = Paths.get("src/main/java/com/examly/springapp/test_imgs").toAbsolutePath().normalize();
+            Path imagePath = root.resolve(imageName).normalize();
+            if (!imagePath.startsWith(root)) return ResponseEntity.badRequest().build();
             Resource resource = new UrlResource(imagePath.toUri());
 
             if (resource.exists() && resource.isReadable()) {

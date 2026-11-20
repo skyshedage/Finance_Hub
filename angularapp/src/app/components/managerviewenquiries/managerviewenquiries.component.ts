@@ -19,7 +19,7 @@ export class ManagerviewenquiriesComponent implements OnInit {
 
   loadEnquiries(): void {
     this.enquiryService.getAllEnquiry().subscribe((data: any) => {
-      console.log("DBUG :: DATAAAAA :: " + JSON.stringify(data));
+
       this.enquiries = data.slice();
       this.arr=data.slice();
 

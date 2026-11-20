@@ -107,7 +107,7 @@ export class LoginComponent implements OnInit {
  
   onLoginSubmit(): void {
     if (this.loginForm.invalid) {
-      console.log("Form is invalid");
+
       return;
     }
  
@@ -128,9 +128,7 @@ export class LoginComponent implements OnInit {
         localStorage.setItem('role', data[1] || '');
         localStorage.setItem('userId', data[2] || '');
         localStorage.setItem('username', data[3] || '');
- 
-        console.log("Login successful!", data);
- 
+
        // alert("Login successful!");
         this.showSuccessPopup=true;
         setTimeout(()=>{

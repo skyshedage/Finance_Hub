@@ -35,6 +35,7 @@ import jakarta.persistence.OneToOne;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @SpringBootTest(classes = SpringappApplication.class)
 @AutoConfigureMockMvc
+@org.springframework.security.test.context.support.WithMockUser(roles="ADMIN")
 class SpringappApplicationTests {
 	
 	 @Autowired
@@ -48,7 +49,7 @@ class SpringappApplicationTests {
 			.andExpect(MockMvcResultMatchers.status().isOk())
 	        .andDo(print())
 	        .andExpect(content().contentType("application/json"))
-		.andExpect(jsonPath("$").isArray())
+		.andExpect(jsonPath("$.data").isArray())
 		.andReturn();
 	    }
 	    

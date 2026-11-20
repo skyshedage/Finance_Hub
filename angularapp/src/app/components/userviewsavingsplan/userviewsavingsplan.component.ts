@@ -50,7 +50,7 @@ export class UserviewsavingsplanComponent implements OnInit {
       (response) => {
         if (response.success) {
           // Handle viewing of individual savings plan details (optional)
-          console.log('Savings plan details:', response.data);
+
           // Optionally navigate to a new page to view detailed plan information
           this.router.navigate([`/view/savings/plan/${id}`]);
         } else {

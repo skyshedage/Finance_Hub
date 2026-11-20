@@ -33,7 +33,7 @@ public class PlanApplicationController {
     private PlanApplicationServiceImpl planApplicationService;
 
     @PostMapping
-    @PreAuthorize("hasAuthority('ROLE_USER')") // Only USER can apply
+    @PreAuthorize("hasAuthority('ROLE_USER') and @ownership.user(#planApplication.userId, authentication)") // Only own applications
     public ResponseEntity<ApiResponse<PlanApplication>> applyForPlan(
             @RequestBody PlanApplicationRequest planApplication) {
         PlanApplication application = planApplicationService.applyForPlan(planApplication);
@@ -41,17 +41,17 @@ public class PlanApplicationController {
     }
 
     @GetMapping
-    @PreAuthorize("hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_USER')") // Only ADMIN can view all applications
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')") // Only ADMIN can view all applications
     public ResponseEntity<ApiResponse<List<PlanApplication>>> getAllApplications() {
         List<PlanApplication> applications = planApplicationService.getAllApplications();
         return ResponseEntity.ok(new ApiResponse<>(true, "Fetched all plan applications", applications));
     }
 
     @GetMapping("/applications/user/{userId}")
-    @PreAuthorize("hasAuthority('ROLE_USER')")
+    @PreAuthorize("hasAuthority('ROLE_USER') and @ownership.user(#userId, authentication)")
     public ResponseEntity<ApiResponse<List<PlanApplication>>> getUserApplications(@PathVariable Long userId) {
         List<PlanApplication> applications = planApplicationService.getUserApplication(userId);
-        System.out.println("\n\nDBUG :: GET USER APPLICATIONS :: " + applications + "\n\n");
+
         return ResponseEntity.ok(new ApiResponse<>(true, "Applications retrieved", applications));
     }
 

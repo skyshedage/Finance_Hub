@@ -28,13 +28,11 @@ export class ManagereditenquiryComponent implements OnInit {
   ngOnInit(): void {
     // Get enquiry ID from URL
     this.enquiryId = +this.route.snapshot.params['enqId'];
-    console.log("ENQID :: \n"+this.enquiryId);
-    
 
     if (this.enquiryId) {
       // Fetch enquiry details from API
       this.enquiryService.getEnquiryById(this.enquiryId).subscribe((data: any) => {
-        console.log("DBUG :: DATA :: \n" + JSON.stringify(data) + " \n\n");
+
         this.enquiry = data.data;
       });
     }
@@ -50,7 +48,7 @@ export class ManagereditenquiryComponent implements OnInit {
       .subscribe(
         (res) => {
           alert('Enquiry updated successfully');
-          console.log("DBUG :: Updated Enquiry:", JSON.stringify(res));
+
           this.router.navigate(['/manager/view/enquiries']);
         },
         (error) => {

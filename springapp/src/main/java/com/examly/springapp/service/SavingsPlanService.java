@@ -1,21 +1,11 @@
 package com.examly.springapp.service;
-
 import java.util.List;
-
 import com.examly.springapp.model.SavingsPlan;
-
+/** Contract for the savings-plan operations used by the current controller. */
 public interface SavingsPlanService {
-
-    SavingsPlan viewSavingsPlanById(Long savingsPlanId);
-    List<SavingsPlan> viewAllSavingsPlans();
-    SavingsPlan addSavingsPlan(SavingsPlan savingsPlan);
-    SavingsPlan editSavingsPlan(Long savingsPlanId,SavingsPlan savingsPlan);
-    SavingsPlan deleteSavingsPlan(Long savingsPlanId);
-
-    List<SavingsPlan> viewSavingsPlanByUserId(Long userId,String status);
-
-
-
-    List<SavingsPlan> getUnappliedSavingsPlans(Long userId);
-
+ SavingsPlan addSavingsPlan(SavingsPlan savingsPlan);
+ List<SavingsPlan> getAllPlans();
+ SavingsPlan updateSavingsPlan(Long id, SavingsPlan updatedPlan);
+ void deleteSavingsPlan(Long id);
+ SavingsPlan getSavingsPlanById(Long id);
 }

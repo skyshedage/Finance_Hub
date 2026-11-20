@@ -300,7 +300,7 @@ export class ChartsComponent implements OnInit {
   ngOnInit(): void {
     this.dashboardService.getPlanApplicationStatus().subscribe({
       next: (response) => {
-        console.log("DBUG getPlanAppStatus:: \n\n"+JSON.stringify(response));
+
         this.applicationStatusData = {
           labels: Object.keys(response.data),
           datasets: [{
@@ -327,7 +327,7 @@ export class ChartsComponent implements OnInit {
 
     this.dashboardService.getMonthlyApplicationTrends().subscribe({
       next: (response) => {
-        console.log("DBUG getMonthlyAppTrends:: \n\n"+JSON.stringify(response));
+
         this.monthlyApplicationData = {
           labels: Object.keys(response.data),
           datasets: [{
@@ -369,7 +369,7 @@ export class ChartsComponent implements OnInit {
 
     this.dashboardService.getEnquiryStatus().subscribe({
       next: (response) => {
-        console.log("DBUG getEnqStatus:: \n\n"+JSON.stringify(response));
+
         this.enquiryStatusData = {
           labels: Object.keys(response.data),
           datasets: [{

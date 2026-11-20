@@ -34,8 +34,7 @@ export class AdminHomeComponent implements OnInit {
     });
 
     this.planApplicationService.getAllPlanApplications().subscribe((response:any) => {
-      console.log("DBUG ::RESPONSE GETALLPLANAPPLICATION :: "+JSON.stringify((response)));
-      
+
       this.stats.pendingApplications = response?.data?.filter(app => app.status === 'PENDING').length;
     });
 

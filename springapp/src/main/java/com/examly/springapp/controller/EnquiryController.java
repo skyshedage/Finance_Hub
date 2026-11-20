@@ -54,7 +54,7 @@ public class EnquiryController {
     // return new ResponseEntity<>(enquiry,HttpStatus.OK);
     // }
 
-    @PreAuthorize("hasAuthority('ROLE_USER')")
+    @PreAuthorize("hasAuthority('ROLE_USER') and @ownership.user(#userId, authentication)")
     @PostMapping("/{userId}")
     public ResponseEntity<?> addEnquiries(@RequestBody Enquiry enq,@PathVariable Long userId) {
         Enquiry enquiry = enquiryServiceImpl.addEnquiry(enq,userId);
@@ -64,16 +64,12 @@ public class EnquiryController {
         return new ResponseEntity<>(enquiry, HttpStatus.CREATED);
     }
 
-    @PreAuthorize("hasAuthority('ROLE_USER')")
+    @PreAuthorize("hasAuthority('ROLE_USER') and @ownership.user(#userId, authentication)")
     @GetMapping("/user/{userId}")
     public ResponseEntity<ApiResponse<List<Enquiry>>> getUserEnquiries(@PathVariable Long userId) {
-        System.out.println("USER ID:::  "+userId);
+
         List<Enquiry> enquiries = enquiryServiceImpl.getUserEnquiries(userId);
 
-        if (enquiries.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body(new ApiResponse<>(false, "No enquiries found for the user", null));
-        }
 
         return ResponseEntity.status(HttpStatus.OK)
                 .body(new ApiResponse<>(true, "User enquiries retrieved", enquiries));
@@ -133,7 +129,7 @@ public class EnquiryController {
 
     
     @PutMapping("/{enquiryId}")
-    @PreAuthorize("hasAuthority('ROLE_USER')")
+    @PreAuthorize("hasAuthority('ROLE_USER') and @ownership.enquiry(#enquiryId, authentication)")
     public ResponseEntity<ApiResponse<Enquiry>> updateEnquiry(@PathVariable Long enquiryId, @RequestBody Enquiry updatedEnquiry) {
         try {
             Enquiry existingEnquiry = enquiryServiceImpl.getEnquiryById(enquiryId);

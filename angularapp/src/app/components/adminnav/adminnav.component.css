@@ -83,3 +83,13 @@
 .overlay .logout:hover {
     color: #9A1750;
 }
+.navbar-custom{position:relative;background-color:#000;}
+.navbar-custom .container-fluid{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:nowrap;}
+.navbar-custom .navbar-brand{white-space:normal;overflow-wrap:anywhere;font-size:clamp(1.1rem,5vw,1.8rem);min-width:0;}
+.navbar-toggler{min-width:44px;min-height:44px;flex-shrink:0;}
+.overlay{visibility:hidden;pointer-events:none;overflow:auto;}
+.overlay.show{visibility:visible;pointer-events:auto;}
+.overlay-row{flex-wrap:wrap;}
+@media(max-width:600px){.overlay-row{display:block;margin-bottom:0;}.overlay a{font-size:1.25rem;padding:10px;}}
+
+.menu-close{position:absolute;top:90px;right:20px;min-height:44px;padding:8px 16px;border:1px solid #EE4C7C;border-radius:4px;background:#000;color:#fff;font-size:1rem;cursor:pointer;}

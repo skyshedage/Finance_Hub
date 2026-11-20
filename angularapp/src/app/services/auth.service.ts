@@ -15,7 +15,6 @@ export class AuthService {
     return this.http.post(`${this.apiURL}/login`, credentials);
   }
   register(creadentials :any) {
-    console.log("DBUG :: "+JSON.stringify(creadentials));
     
     return this.http.post(`${this.apiURL}/register`,creadentials);
   }
@@ -46,4 +45,3 @@ export class AuthService {
     return localStorage.getItem('userId');
   }
 }
-

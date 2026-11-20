@@ -36,10 +36,8 @@ public class AuthService {
         }
         user.setPassword(passwordEncoder.encode(user.getPassword())); // Encrypt password
 
-        if(user.getUserRole()==null||user.getUserRole().isEmpty()){
-            //if no role is present then by default it will be set to the user
-            user.setUserRole("USER");
-        }
+        // Registration is public. Client-supplied roles must never grant privileges.
+        user.setUserRole("USER");
         try {
             userRepo.save(user);
             return "User Registered Successfully";
@@ -57,9 +55,7 @@ public class AuthService {
             throw new PasswordDoNotMatchException("Invalid Password Check your password");
         }
 
-        System.out.println(email+" ---- "+password);
 
         return jwtUtil.generateToken(user)+","+user.getUserRole()+","+user.getUserId()+","+user.getUsername(); // Generate JWT token
     }
 }
-
